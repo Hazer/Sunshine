@@ -121,13 +121,13 @@ jobs:
     steps:
       - name: Maximize build space
         if: runner.os == 'Linux'
-        uses: easimon/maximize-build-space@v8
+        uses: easimon/maximize-build-space@v10
         with:
-          root-reserve-mb: 20480
+          root-reserve-mb: 30720
           remove-dotnet: ${{ (matrix.language == 'csharp' && 'false') || 'true' }}
           remove-android: 'true'
           remove-haskell: 'true'
-          remove-codeql: 'false'
+          remove-codeql: 'true'
           remove-docker-images: 'true'
 
       - name: Checkout repository
