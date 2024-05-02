@@ -1,8 +1,9 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import {provide, reactive, ref} from 'vue'
 import { $tp } from '../../../platform-i18n'
 import PlatformLayout from '../../../PlatformLayout.vue'
 import LegacyDisplayOutputSelector from './LegacyDisplayOutputSelector.vue'
+import DisplaysCanvasLayout from './DisplaysCanvasLayout.vue'
 
 const props = defineProps({
   platform: String,
@@ -13,6 +14,8 @@ const props = defineProps({
 const config = reactive(props.config)
 
 const selectedDisplay = ref(getDisplaySelected(props.config.output_name))
+
+provide('selectedDisplay', selectedDisplay)
 
 function getDisplaySelected(id) {
   if (!id || !props.displays) { return null }
@@ -73,9 +76,11 @@ function resolution(display) {
             <b>&nbsp;&nbsp;&nbsp;&nbsp;DEVICE ID: {{ selectedDisplay.id }}</b><br>
             <b>&nbsp;&nbsp;&nbsp;&nbsp;FRIENDLY NAME: {{ selectedDisplay.friendly_name }}</b><br>
             <b>&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY DEVICE: {{ isPrimary(selectedDisplay) }}</b><br>
-            <b>&nbsp;&nbsp;&nbsp;&nbsp;RAW DEVICE DATA:</b><br>
-            <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ JSON.stringify(selectedDisplay) }}</b><br>
           </div>
+          <DisplaysCanvasLayout
+              :displays="displays"
+              :selectedDisplay="selectedDisplay"
+          />
         </template>
       </PlatformLayout>
     </div>
