@@ -18,21 +18,21 @@
     return [NSArray array];
   }
 
+  NSArray<NSScreen*> *screens = [NSScreen screens];
   NSMutableArray *result = [NSMutableArray array];
 
   for (uint32_t i = 0; i < count; i++) {
     [result addObject:@{
       @"id": [NSNumber numberWithUnsignedInt:displays[i]],
       @"name": [NSString stringWithFormat:@"%d", displays[i]],
-      @"displayName": [self getDisplayName:displays[i]],
+      @"displayName": [self getDisplayName:displays[i] with:screens],
     }];
   }
 
   return [NSArray arrayWithArray:result];
 }
 
-+ (NSString *)getDisplayName:(CGDirectDisplayID)displayID {
-  NSScreen *screens = [NSScreen screens];
++ (NSString *)getDisplayName:(CGDirectDisplayID)displayID with: (NSArray<NSScreen*>*)screens {
   for (NSScreen *screen in screens) {
     if (screen.deviceDescription[@"NSScreenNumber"] == [NSNumber numberWithUnsignedInt:displayID]) {
       return screen.localizedName;
