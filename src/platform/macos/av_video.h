@@ -30,7 +30,7 @@ typedef bool (^FrameCallbackBlock)(CMSampleBufferRef);
 @property (nonatomic, assign) NSMapTable<AVCaptureConnection *, dispatch_semaphore_t> *captureSignals;
 
 + (NSArray<NSDictionary *> *)displayNames;
-+ (NSString *)getDisplayName:(CGDirectDisplayID)displayID;
++ (NSString *)getDisplayName:(CGDirectDisplayID)displayID with: (NSArray<NSScreen*>*)screens;
 
 - (id)initWithDisplay:(CGDirectDisplayID)displayID frameRate:(int)frameRate;
 
