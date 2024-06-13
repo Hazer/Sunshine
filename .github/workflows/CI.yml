@@ -506,7 +506,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set IS_PR Environment Variable
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         run: echo "IS_PR=1" >> $GITHUB_ENV
 
       - name: Configure formula
