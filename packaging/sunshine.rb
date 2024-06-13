@@ -3,7 +3,7 @@ require "language/node"
 class @PROJECT_NAME@ < Formula
   desc "@PROJECT_DESCRIPTION@"
   homepage "@PROJECT_HOMEPAGE_URL@"
-  if ENV["IS_PR"] == "1"
+  if ENV["HOMEBREW_IS_PR"] == "1"
     url "@GITHUB_CLONE_URL@", branch: "@GITHUB_BRANCH@", revision: "@GITHUB_COMMIT@"
   else
     url "@GITHUB_CLONE_URL@", branch: "@GITHUB_DEFAULT_BRANCH@", tag: "@BUILD_VERSION@"
@@ -12,17 +12,15 @@ class @PROJECT_NAME@ < Formula
   license all_of: ["GPL-3.0-only"]
   head "@GITHUB_CLONE_URL@", branch: "@GITHUB_DEFAULT_BRANCH@"
 
-  if ENV["IS_PR"] != "1"
-    # https://docs.brew.sh/Brew-Livecheck#githublatest-strategy-block
-    livecheck do
-      url :stable
-      regex(/^v?(\d+\.\d+\.\d+)$/i)
-      strategy :github_latest do |json, regex|
-        match = json["tag_name"]&.match(regex)
-        next if match.blank?
+  # https://docs.brew.sh/Brew-Livecheck#githublatest-strategy-block
+  livecheck do
+    url :stable
+    regex(/^v?(\d+\.\d+\.\d+)$/i)
+    strategy :github_latest do |json, regex|
+      match = json["tag_name"]&.match(regex)
+      next if match.blank?
 
-        match[1]
-      end
+      match[1]
     end
   end
 

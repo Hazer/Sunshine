@@ -577,7 +577,7 @@ jobs:
       - name: Validate Homebrew Formula
         uses: LizardByte/homebrew-release-action@v2024.612.21058
         env:
-          IS_PR: ${{ env.IS_PR }}
+          HOMEBREW_IS_PR: ${{ env.IS_PR }}
         with:
           formula_file: ${{ github.workspace }}/homebrew/sunshine.rb
           git_email: ${{ secrets.GH_BOT_EMAIL }}
